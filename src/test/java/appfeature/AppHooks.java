@@ -45,15 +45,15 @@ public class AppHooks
 	@After(order=2) 
 	public void tearDown(Scenario scenario)
 	{
-		boolean isScenarioFailed=scenario.isFailed(); // This will return true only if scenarion is failed 
-	     if(isScenarioFailed)
-	     {
-		 String scenarioName=scenario.getName();
-		 String name=scenarioName.replace(" ","_");
-		 TakesScreenshot ts=(TakesScreenshot)driver;
-		 byte[] source=ts.getScreenshotAs(OutputType.BYTES);
-		 scenario.attach(source,"image/png",name);  // We can write the jpg as well 
-	     }
+		if(scenario.isFailed())
+		{
+			String scenarioName=scenario.getName();
+			String name=scenarioName.replaceAll(" ", "");
+			TakesScreenshot ts=(TakesScreenshot)driver;
+			byte[] source=ts.getScreenshotAs(OutputType.BYTES);
+			scenario.attach(source, "image/png", name);
+		}
+		
 	}
 	
 	@After(order=1)
